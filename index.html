@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10141d">
+  <meta name="description" content="لعبة الهروب من الغرفة: اكتشف الأدلة وحل الألغاز قبل انتهاء الوقت.">
+  <title>الهروب من الغرفة | لعبة ألغاز</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main>
+    <section class="screen active start-screen" id="screen-start" aria-labelledby="start-title">
+      <div class="start-glow" aria-hidden="true"></div>
+      <div class="start-card">
+        <div class="eyebrow">تحدي الذكاء والملاحظة</div>
+        <div class="keyhole" aria-hidden="true"><span></span></div>
+        <h1 id="start-title">الهروب من <em>الغرفة</em></h1>
+        <p class="start-copy">باب مغلق، وغرفة مليئة بالأسرار. فتش عن الأدلة، حل الألغاز، واخرج قبل نفاد الوقت.</p>
+        <div class="start-facts"><span>◷ ١٥ دقيقة</span><span>✦ ٧ تحديات</span><span>◈ ٣ تلميحات</span></div>
+        <div class="start-actions"><button id="btn-start" class="primary-btn">ابدأ المغامرة <span aria-hidden="true">←</span></button><button id="btn-howto" class="secondary-btn">طريقة اللعب</button></div>
+        <div id="best-stats" class="best-stats" aria-live="polite"></div>
+      </div>
+      <p class="credit">برمجة وتنفيذ الأستاذ مقرن المطيري</p>
+    </section>
+
+    <section class="screen game-screen" id="screen-game" aria-label="غرفة الألغاز">
+      <header class="hud">
+        <div class="hud-brand"><span class="brand-mark">⌑</span><span>الهروب من الغرفة</span></div>
+        <div class="hud-stats"><div class="hud-pill" id="hud-timer" aria-label="الوقت المتبقي">◷ <strong id="timer-text" dir="ltr">15:00</strong></div><div class="hud-pill" aria-label="النقاط">✦ <strong id="score-text">1000</strong></div></div>
+        <div class="hud-actions"><button class="hud-button" id="btn-hint" type="button" title="استخدم تلميحًا">💡 <span>تلميح</span> <small id="hints-count">٣</small></button><button class="hud-button" id="btn-notebook" type="button" title="دفتر الأدلة">▤ <span>الأدلة</span><small id="notebook-badge" class="hidden">0</small></button></div>
+      </header>
+      <div class="game-intro"><p>اضغط على عناصر الغرفة للبحث عن الأدلة</p><div class="progress-track" aria-label="تقدم حل الألغاز"><span id="progress-fill"></span></div><span id="progress-text">٠ من ٦ ألغاز</span></div>
+      <div class="room-scene">
+        <div class="room-window" aria-hidden="true"><div class="moon"></div><div class="window-bars"></div></div>
+        <div class="room-lamp" aria-hidden="true"></div>
+        <div class="room-baseboard" aria-hidden="true"></div>
+        <button class="room-object clock" id="obj-clock" aria-label="افتح لغز الساعة"><span class="object-art clock-art"><span class="clock-face"><span class="clock-hand h-one"></span><span class="clock-hand h-two"></span><span class="clock-pin"></span></span></span><span class="object-label">الساعة</span></button>
+        <button class="room-object painting" id="obj-painting" aria-label="افحص اللوحة"><span class="object-art painting-art"><span class="painting-inner"><span class="painting-moon"></span><span class="mountain mountain-one"></span><span class="mountain mountain-two"></span></span></span><span class="object-label">اللوحة</span></button>
+        <button class="room-object safe hidden" id="obj-safe" aria-label="افتح الخزنة"><span class="object-art safe-art"><span class="safe-dial"></span><span class="safe-slot"></span></span><span class="object-label">الخزنة</span></button>
+        <button class="room-object desk" id="obj-desk" aria-label="افحص المكتب"><span class="object-art desk-art"><span class="desk-top"></span><span class="desk-drawer"><span></span></span><span class="desk-legs"></span></span><span class="object-label">المكتب</span></button>
+        <button class="room-object book" id="obj-book" aria-label="افتح الكتاب"><span class="object-art book-art">✧</span><span class="object-label">الكتاب</span></button>
+        <button class="room-object box" id="obj-box" aria-label="افتح الصندوق"><span class="object-art box-art"><span class="box-lid"></span><span class="box-lock">⌑</span></span><span class="object-label">الصندوق</span></button>
+        <button class="room-object door" id="obj-door" aria-label="افتح الباب"><span class="object-art door-art"><span class="door-inner"></span><span class="door-knob"></span></span><span class="object-label">الباب</span></button>
+      </div>
+      <div class="inventory"><strong>مقتنياتك</strong><div id="inv-items"><span class="muted">لا شيء بعد</span></div></div>
+      <p class="game-credit">برمجة وتنفيذ الأستاذ مقرن المطيري</p>
+    </section>
+
+    <section class="screen end-screen win-screen" id="screen-win"><div class="end-card"><div class="end-icon">✦</div><h2>نجحت في الهروب!</h2><p>جمعت الأدلة وفتحت الباب قبل انتهاء الوقت.</p><div class="end-stats"><span>الوقت المستغرق <strong id="win-time"></strong></span><span>التلميحات المستخدمة <strong id="win-hints"></strong></span><span>مجموع النقاط <strong id="win-score"></strong></span></div><p id="win-record" class="record hidden">رقم قياسي جديد! ✦</p><button id="btn-replay" class="primary-btn">العب مجددًا</button></div><p class="credit">برمجة وتنفيذ الأستاذ مقرن المطيري</p></section>
+    <section class="screen end-screen lose-screen" id="screen-lose"><div class="end-card"><div class="end-icon">⌛</div><h2>انتهى الوقت</h2><p>لا تزال أسرار الغرفة تنتظر من يكتشفها. حاول مرة أخرى!</p><button id="btn-retry" class="primary-btn">إعادة المحاولة</button></div><p class="credit">برمجة وتنفيذ الأستاذ مقرن المطيري</p></section>
+  </main>
+
+  <div class="modal-overlay hidden" id="modal-howto" role="dialog" aria-modal="true" aria-labelledby="howto-title"><div class="modal-box"><button class="modal-close" data-close="modal-howto" aria-label="إغلاق">×</button><div class="modal-kicker">دليل المغامرة</div><h2 id="howto-title">طريقة اللعب</h2><ul class="howto-list"><li>اضغط على الأشياء داخل الغرفة وافحص كل لغز.</li><li>اجمع الأرقام والأدلة في دفتر الملاحظات.</li><li>افتح الكتاب أولًا لتحصل على مفتاح الصندوق.</li><li>يمكنك استخدام ٣ تلميحات؛ كل تلميح يخصم ٥٠ نقطة.</li><li>اجمع الرمز، افتح الخزنة ثم الباب خلال ١٥ دقيقة.</li></ul><button class="primary-btn modal-action" data-close="modal-howto">فهمت</button></div></div>
+  <div class="modal-overlay hidden" id="modal-notebook" role="dialog" aria-modal="true" aria-labelledby="notebook-title"><div class="modal-box"><button class="modal-close" data-close="modal-notebook" aria-label="إغلاق">×</button><div class="modal-kicker">سجل الاكتشافات</div><h2 id="notebook-title">دفتر الأدلة</h2><ul id="clue-list" class="clue-list"><li>لم تجد أدلة بعد.</li></ul></div></div>
+  <div class="modal-overlay hidden" id="modal-clock" role="dialog" aria-modal="true" aria-labelledby="clock-title"><div class="modal-box"><button class="modal-close" data-close="modal-clock" aria-label="إغلاق">×</button><div class="modal-kicker">اللغز الأول · الساعة</div><h2 id="clock-title">أرقام على عقارب الزمن</h2><p>رتب هذه الأرقام تصاعديًا بالضغط عليها واحدًا بعد الآخر.</p><div id="clock-chips" class="chip-row"></div><p id="clock-feedback" class="feedback" aria-live="polite"></p><p id="clock-hint" class="hint-line"></p></div></div>
+  <div class="modal-overlay hidden" id="modal-painting" role="dialog" aria-modal="true" aria-labelledby="painting-title"><div class="modal-box"><button class="modal-close" data-close="modal-painting" aria-label="إغلاق">×</button><div class="modal-kicker">اللغز الثاني · اللوحة</div><h2 id="painting-title">الرقم المختلف</h2><p>خلف اللوحة أرقام محفورة. ابحث عن الرقم الذي يلمع أكثر.</p><div id="painting-grid" class="number-grid"></div><p id="painting-feedback" class="feedback" aria-live="polite"></p><p id="painting-hint" class="hint-line"></p></div></div>
+  <div class="modal-overlay hidden" id="modal-book" role="dialog" aria-modal="true" aria-labelledby="book-title"><div class="modal-box"><button class="modal-close" data-close="modal-book" aria-label="إغلاق">×</button><div class="modal-kicker">اللغز الثالث · الكتاب</div><h2 id="book-title">سر بين الصفحات</h2><p class="riddle">ما الشيء الذي يكبر كلما أخذت منه؟</p><div id="book-options" class="option-list"></div><p id="book-feedback" class="feedback" aria-live="polite"></p><p id="book-hint" class="hint-line"></p></div></div>
+  <div class="modal-overlay hidden" id="modal-box-locked" role="dialog" aria-modal="true" aria-labelledby="locked-title"><div class="modal-box"><button class="modal-close" data-close="modal-box-locked" aria-label="إغلاق">×</button><div class="modal-kicker">الصندوق</div><h2 id="locked-title">الصندوق مقفل</h2><p>ابحث عن مفتاح صغير داخل الغرفة؛ ربما يخفيه الكتاب.</p></div></div>
+  <div class="modal-overlay hidden" id="modal-box" role="dialog" aria-modal="true" aria-labelledby="box-title"><div class="modal-box"><button class="modal-close" data-close="modal-box" aria-label="إغلاق">×</button><div class="modal-kicker">اللغز الرابع · الصندوق</div><h2 id="box-title">فك الشفرة</h2><p>افتح الورقة الصغيرة وحدد قيمة النجمة في الشفرة.</p><div class="cipher-legend"><span>◆ = ٦</span><span>● = ٤</span><span>★ = ٢</span><span>▲ = ٩</span></div><div class="cipher-target">★ = ؟</div><div class="answer-row"><input id="box-answer" type="text" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="قيمة النجمة"><button id="box-submit" class="primary-btn">تحقق</button></div><p id="box-feedback" class="feedback" aria-live="polite"></p><p id="box-hint" class="hint-line"></p></div></div>
+  <div class="modal-overlay hidden" id="modal-desk" role="dialog" aria-modal="true" aria-labelledby="desk-title"><div class="modal-box"><button class="modal-close" data-close="modal-desk" aria-label="إغلاق">×</button><div class="modal-kicker">اللغز الخامس · المكتب</div><h2 id="desk-title">درج المكتب</h2><div id="desk-stage-question"><p>أكمل المتتابعة لفتح الدرج:</p><p class="sequence" dir="ltr">2 · 4 · 8 · 16 · ؟</p><div class="answer-row"><input id="desk-answer" type="text" inputmode="numeric" maxlength="2" autocomplete="off" aria-label="العدد التالي"><button id="desk-submit" class="primary-btn">افتح</button></div></div><div id="desk-stage-note" class="note-paper hidden">ورقة الدرج تقول: رتب أرقام الخزنة هكذا: <strong>الساعة ← اللوحة ← الصندوق ← المكتب</strong>.</div><p id="desk-feedback" class="feedback" aria-live="polite"></p><p id="desk-hint" class="hint-line"></p></div></div>
+  <div class="modal-overlay hidden" id="modal-safe" role="dialog" aria-modal="true" aria-labelledby="safe-title"><div class="modal-box"><button class="modal-close" data-close="modal-safe" aria-label="إغلاق">×</button><div class="modal-kicker">اللغز السادس · الخزنة</div><h2 id="safe-title">الخزنة السرية</h2><div id="safe-stage-lock"><p>اجمع الأرقام الأربعة بالترتيب المذكور في ورقة الدرج.</p><div class="digit-row" dir="ltr"><input id="safe-d1" type="text" inputmode="numeric" maxlength="1" aria-label="الرقم الأول"><input id="safe-d2" type="text" inputmode="numeric" maxlength="1" aria-label="الرقم الثاني"><input id="safe-d3" type="text" inputmode="numeric" maxlength="1" aria-label="الرقم الثالث"><input id="safe-d4" type="text" inputmode="numeric" maxlength="1" aria-label="الرقم الرابع"></div><button id="safe-submit" class="primary-btn modal-action">افتح الخزنة</button></div><div id="safe-stage-note" class="note-paper hidden">عثرت على ورقة أخيرة: رمز الباب <strong dir="ltr">173</strong>.</div><p id="safe-feedback" class="feedback" aria-live="polite"></p><p id="safe-hint" class="hint-line"></p></div></div>
+  <div class="modal-overlay hidden" id="modal-door" role="dialog" aria-modal="true" aria-labelledby="door-title"><div class="modal-box"><button class="modal-close" data-close="modal-door" aria-label="إغلاق">×</button><div class="modal-kicker">التحدي الأخير · الباب</div><h2 id="door-title">هل ستنجح في الهروب؟</h2><p>أدخل رمز الباب الموجود في الورقة الأخيرة.</p><div class="digit-row" dir="ltr"><input id="door-d1" type="text" inputmode="numeric" maxlength="1" aria-label="الرقم الأول"><input id="door-d2" type="text" inputmode="numeric" maxlength="1" aria-label="الرقم الثاني"><input id="door-d3" type="text" inputmode="numeric" maxlength="1" aria-label="الرقم الثالث"></div><button id="door-submit" class="primary-btn modal-action">افتح الباب</button><p id="door-feedback" class="feedback" aria-live="polite"></p><p id="door-hint" class="hint-line"></p></div></div>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>
